@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
+.profileAdmin {
+  display: flex;
+  width: 100%;
+}
+
+.profileAdminContainer{
+  flex: 6;
+}
+
+.profileAdminWrapper {
+  min-height: calc(100vh-50px);
+  padding: 20px;
+}
+
+.profileAdminTitle {
+  font-size: 30px;
+  font-family: 'Lalezar', cursive;
+  color: #3F37C9;
+  font-weight: 600;
+}
+
+.profileAdminWrapper hr {
+  margin-top: 10px;
+}
+
+.profileAdminContent {
+  padding: 10px;
+}

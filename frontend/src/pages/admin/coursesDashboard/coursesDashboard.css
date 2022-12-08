@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
+.coursesDB {
+  display: flex;
+  width: 100%;
+}
+
+.coursesDBContainer{
+  flex: 6;
+}
+
+.coursesDBWrapper {
+  min-height: calc(100vh-50px);
+  padding: 20px;
+}
+
+.coursesDBWrapper hr {
+  margin-top: 15px;
+
+}
+
+.coursesDBTitle {
+  font-size: 30px;
+  font-family: 'Lalezar', cursive;
+  color: #3F37C9;
+  font-weight: 600;
+}
+
+.coursesDBSearch{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.coursesDBTotal {
+  padding-left: 5px;
+}
+
+.coursesDBSearchOption {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+
+.coursesDBSearchUsernameInput {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 3px 20px;
+}
+
+.coursesDBLoadMore {
+  margin-top: 15px;
+}
+
+.btnLoadMore {
+
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  background: #afe4ff;  
+  font-weight: 600;
+  font-size: 14px;
+  color: black;
+  padding: 8px 24px;
+  margin: 5px 0;
+  cursor: pointer;
+  transition: all 0.325s;
+}
+
+.btnLoadMore:hover {
+  opacity: 0.8;
+}

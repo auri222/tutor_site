@@ -1,0 +1,41 @@
+.listCourseUserContainer {
+  background-color: #ecebff;
+  padding: 20px 0;
+  min-height: calc(100vh - 80px - 163.6px);
+}
+
+.listCourseUserWrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.lCUTitle {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.lCUTitleTotal {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+
+.buttonCreatePublicCourse{
+  border: 2px solid #fff;
+  outline: none;
+  padding: 8px 18px;
+  color: white;
+  /* background-color: #2b9195; */
+  background-color: #01c75d;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.buttonCreatePublicCourse:hover {
+  border: 2px solid #04e46d;
+  background-color: #04e46d;
+}

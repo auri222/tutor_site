@@ -1,0 +1,30 @@
+
+.btnReview {
+  border: none;
+  border-radius: 3px;
+  background: #3F37C9;  
+  font-weight: 500;
+  font-size: 14px;
+  color: white;
+  padding: 3px 8px;
+  margin: 5px 0;
+  cursor: pointer;
+  transition: all 0.325s;
+}
+
+.btnReview:hover {
+  opacity: 0.825;
+}
+
+.btnCancelForm {
+  border: none;
+  border-radius: 3px;
+  background: #bec3d0;  /* fallback for old browsers */
+  font-weight: bold;
+  font-size: 14px;
+  color: black;
+  padding: 3px 8px;
+  margin: 5px 0;
+  cursor: pointer;
+  transition: all 0.325s;
+}

@@ -1,0 +1,43 @@
+GET http://localhost:8000/api/auth
+
+###
+
+POST http://localhost:8000/api/auth/register-user
+Content-Type: application/json
+
+{
+    "username": "thanhnguyen123",
+    "password": "thanhnguyen123",
+    "birthday": "1999-08-25",
+    "CCCD": "115102101889",
+    "home_number": "58/50F",
+    "street": "Đường 3/2",
+    "ward": "Phường Hưng Lợi",
+    "district": "Quận Ninh Kiều",
+    "province": "Thành phố Cần Thơ",
+    "email": "thanhnguyen123@gmail.com",
+    "phone_number": "0329484565"
+}
+
+###
+
+GET http://localhost:8000/api/location/provinces
+###
+
+GET http://localhost:8000/api/location/provinces/25
+
+###
+GET http://localhost:8000/api/location/districts
+
+###
+GET http://localhost:8000/api/location/districts/86
+
+###
+GET http://localhost:8000/api/location/wards
+###
+
+GET http://localhost:8000/api/location/wards/858
+
+###
+
+GET http://localhost:8000/api/auth/user/6325f956bf4e67fdac106407

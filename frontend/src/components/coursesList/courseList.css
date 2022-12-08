@@ -1,0 +1,62 @@
+.cListTitle {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.cListButton {
+  margin-top: 20px;
+}
+
+.cListContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cListItem {
+  flex: 1;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #bbb8ff81;
+}
+
+.cListTitleWrapper {
+  width: 100%;
+  border-bottom: 1px solid #3F37C9;
+  margin-bottom: 8px;
+}
+
+.cListItemTitle{
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.cListItem>button {
+  border: none;
+  margin-top: 10px;
+  padding: 5px 14px;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.cListButton {
+  display: block;
+  margin: 30px auto;
+  padding: 8px 50px;
+  border-radius: 3px;
+  border: none;
+  border: 2px solid #3F37C9;
+  color: white;
+  background-color: #3F37C9;
+  cursor: pointer;
+  transition: all 250ms;
+}
+
+.cListButton:hover {
+  border: 2px solid white;
+  background-color: #564fe1;
+}

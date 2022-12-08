@@ -1,0 +1,8 @@
+.accountDetails {
+  display: flex;
+  width: 100%;
+}
+
+.accountDetailsContainer {
+  flex: 6;
+}

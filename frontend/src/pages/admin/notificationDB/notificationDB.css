@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
+.notificationsDB {
+  display: flex;
+  width: 100%;
+}
+
+.notificationsDBContainer{
+  flex: 6;
+}
+
+.notificationsDBWrapper {
+  min-height: calc(100vh-50px);
+  padding: 20px;
+}
+
+.notificationsDBWrapper hr {
+  margin-top: 15px;
+
+}
+
+.notificationsDBTitle {
+  font-size: 30px;
+  font-family: 'Lalezar', cursive;
+  color: #3F37C9;
+  font-weight: 600;
+}
+
+.notificationsDBSearch{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.notificationsDBTotal {
+  padding-left: 5px;
+}
+
+
+
+.notificationsDBLoadMore {
+  margin-top: 15px;
+}
+
+.btnLoadMore {
+
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  background: #afe4ff;  
+  font-weight: 600;
+  font-size: 14px;
+  color: black;
+  padding: 8px 24px;
+  margin: 5px 0;
+  cursor: pointer;
+  transition: all 0.325s;
+}
+
+.btnLoadMore:hover {
+  opacity: 0.8;
+}

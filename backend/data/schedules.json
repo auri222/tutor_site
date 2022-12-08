@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Sáng thứ 2",
+    "code": "ST2"
+  },
+  {
+    "name": "Chiều thứ 2",
+    "code": "CT2"
+  },
+  {
+    "name": "Tối thứ 2",
+    "code": "TT2"
+  },
+  {
+    "name": "Sáng thứ 3",
+    "code": "ST3"
+  },
+  {
+    "name": "Chiều thứ 3",
+    "code": "CT3"
+  },
+  {
+    "name": "Tối thứ 3",
+    "code": "TT3"
+  },
+  {
+    "name": "Sáng thứ 4",
+    "code": "ST4"
+  },
+  {
+    "name": "Chiều thứ 4",
+    "code": "CT4"
+  },
+  {
+    "name": "Tối thứ 4",
+    "code": "TT4"
+  },
+  {
+    "name": "Sáng thứ 5",
+    "code": "ST5"
+  },
+  {
+    "name": "Chiều thứ 5",
+    "code": "CT5"
+  },
+  {
+    "name": "Tối thứ 5",
+    "code": "TT5"
+  },
+  {
+    "name": "Sáng thứ 6",
+    "code": "ST6"
+  },
+  {
+    "name": "Chiều thứ 6",
+    "code": "CT6"
+  },
+  {
+    "name": "Tối thứ 6",
+    "code": "TT6"
+  },
+  {
+    "name": "Sáng thứ 7",
+    "code": "ST7"
+  },
+  {
+    "name": "Chiều thứ 7",
+    "code": "CT7"
+  },
+  {
+    "name": "Tối thứ 7",
+    "code": "TT7"
+  },
+  {
+    "name": "Sáng chủ nhật",
+    "code": "SCN"
+  },
+  {
+    "name": "Chiều chủ nhật",
+    "code": "CCN"
+  },
+  {
+    "name": "Tối chủ nhật",
+    "code": "TCN"
+  }
+]

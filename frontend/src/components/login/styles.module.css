@@ -1,0 +1,13 @@
+.wrapper {
+  min-height: 100vh !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login_form {
+  width: 40% !important;
+  padding: 50px 20px;
+  border-radius: 10px;
+  border: 2px solid black;
+}

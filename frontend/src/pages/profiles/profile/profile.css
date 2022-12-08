@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.profileContainer {
+  background-color: #ecebff; 
+  z-index: 1;
+}
+.profileAchievementContainer {
+  background-color: #ecebff; 
+  z-index: 1;
+}
+.tutorReviewsContainer {
+  background-color: #ecebff; 
+  z-index: 1;
+}
+
+.commentsContainer{
+  background-color: #ecebff; 
+  z-index: 1;
+}
+
+.sidebar {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 20px;
+  z-index: 2;
+}
+
+.sidebar li {
+  list-style-type: none;
+}
+
+.contentWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.settingContainer {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.settingLine {
+  margin-bottom: 5px;
+}
+
+.settingTitle {
+  font-size: 24px;
+  text-align: center;
+  color: #3F37C9;
+  font-weight: 600;
+}
+
+.settingTitle svg {
+  margin-right: 5px;
+
+}
+
+.settingItem {
+  padding: 10px 0;
+  text-align: center;
+  border-bottom: 1px solid #ecebff;
+}
+
+.settingItem a{
+  text-decoration: none;
+  color: black;
+  padding-left: 5px;
+}
+
+.settingItem:hover {
+  border-radius: 5px;
+  background-color: #ecebff; 
+}
+
+/* Achievements */
+.achievementsContainer {
+  background-color: #6d68c1;
+}
+
+.achievementsWrapper {
+  max-width:  1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.achievementTitle {
+  font-family: 'Black Ops One', cursive;
+  color: white;
+  padding-left: 10px;
+}
+
+/* End Achievements */
+
+/* Comment */
+.commentsWrapper {
+  max-width:  1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.commentsTitle {
+  font-size: 24px;
+  text-align: left;
+  color: #3F37C9;
+  font-weight: 600;
+}

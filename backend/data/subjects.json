@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Toán",
+    "code": "MT"
+  },
+  {
+    "name": "Văn",
+    "code": "MV"
+  },
+  {
+    "name": "Anh văn",
+    "code": "MAV"
+  },
+  {
+    "name": "Địa lý",
+    "code": "MDL"
+  },
+  {
+    "name": "Lịch sử",
+    "code": "MLS"
+  },
+  {
+    "name": "Tin học",
+    "code": "MTH"
+  },
+  {
+    "name": "Sinh học",
+    "code": "MTH"
+  },
+  {
+    "name": "Vẽ",
+    "code": "MTH"
+  },
+  {
+    "name": "Luyện đàn Guitar",
+    "code": "MTH"
+  }
+]

@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+
+.pAContainer {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.pATitle {
+  font-size: 24px;
+  color: #3F37C9;
+  font-weight: 600;
+}
+
+.pATitle svg {
+  margin-right: 5px;
+}
+
+.pADetailTitle {
+font-size: 16px;
+}
+
+.pADetailContent{
+  font-size: 16px;
+}

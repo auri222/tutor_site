@@ -1,0 +1,8 @@
+.courseDetailsDB {
+  display: flex;
+  width: 100%;
+}
+
+.courseDetailsContainerDB {
+  flex: 6;
+}

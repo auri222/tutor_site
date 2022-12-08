@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
+.accDetails {
+  min-height: calc(100vh - 50px);
+  padding: 20px;
+}
+
+.accountDetailsTitle {
+  font-size: 30px;
+  font-family: 'Lalezar', cursive;
+  color: #3F37C9;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.accountDetailsWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.accountWrapper {
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 10px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.accDetailsTtitle {
+  padding-left: 10px;
+  font-size: 24px;
+  font-family: 'Lalezar', cursive;
+  font-weight: 600;
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+}
+
+.pTImg {
+  width: 180px;
+  height: 180px;
+}
+
+.pTCCCDImg {
+  width: 200px;
+  height: 180px;
+}

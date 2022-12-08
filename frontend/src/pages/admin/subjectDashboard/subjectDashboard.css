@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
+.subjectsDB {
+  display: flex;
+  width: 100%;
+}
+
+.subjectsDBContainer{
+  flex: 6;
+}
+
+.subjectsDBWrapper {
+  min-height: calc(100vh-50px);
+  padding: 20px;
+}
+
+.subjectsDBWrapper hr {
+  margin-top: 15px;
+}
+
+.subjectsDBTitle {
+  font-size: 30px;
+  font-family: 'Lalezar', cursive;
+  color: #3F37C9;
+  font-weight: 600;
+}
+
+.subjectsDBSearch{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.subjectsDBTotal {
+  padding-left: 5px;
+  margin-bottom: 15px;
+}

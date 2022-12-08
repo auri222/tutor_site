@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.otp {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #4776E6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8E54E9, #4776E6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8E54E9, #4776E6); 
+  z-index: 1;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(93, 93, 93, 0.566);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+}
+
+.loader>span {
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+}
+
+.otpContainer {
+  width: min(360px, 80%);
+
+  background-color: white;
+  height: max-content;
+  padding: 30px 20px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.oLogo {
+  text-align: center;
+  font-family: 'Lobster', cursive;
+  font-size: 18px;
+  background: #4776E6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8E54E9, #4776E6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8E54E9, #4776E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-size: cover;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.oTitle {
+  font-size: 24px;
+  text-align: center;
+  font-weight: 800;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.oForm input {
+  margin-bottom: 20px;
+}
+
+.fButton {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  background: #4776E6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8E54E9, #4776E6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8E54E9, #4776E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+  padding: 8px 24px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: all 0.325s;
+}
+
+.fButton:hover {
+  opacity: 0.825;
+}
+
+.fButton:disabled {
+  cursor: not-allowed;
+}

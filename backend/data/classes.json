@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Lớp 1",
+    "code": "L1",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 2",
+    "code": "L2",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 3",
+    "code": "L3",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 4",
+    "code": "L4",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 5",
+    "code": "L5",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 6",
+    "code": "L6",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 7",
+    "code": "L7",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 8",
+    "code": "L8",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 9",
+    "code": "L9",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 10",
+    "code": "L10",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 11",
+    "code": "L11",
+    "subjects": []
+  },
+  {
+    "name": "Lớp 12",
+    "code": "L12",
+    "subjects": []
+  },
+  {
+    "name": "Lớp năng khiếu",
+    "code": "LNK",
+    "subjects": []
+  }
+]

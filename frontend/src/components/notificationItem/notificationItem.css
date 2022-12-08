@@ -1,0 +1,20 @@
+
+.notificationWrapper {
+  border: 2px solid #ecebff;
+  border-radius: 5px;
+  padding: 10px 10px;
+  z-index: 1;
+}
+
+.notificationDate {
+  font-size: 12px;
+  color: gray;
+}
+
+.notificationStatus {
+  font-size: 12px;
+}
+
+.notificationLink a{
+  text-decoration: none;
+}

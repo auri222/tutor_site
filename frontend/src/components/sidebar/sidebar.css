@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.sidebarContainer {
+  border-right: 0.5px solid rgb(195, 189, 189);
+  flex: 1;
+  min-height: 100vh;
+}
+
+
+.top {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 0.5px solid rgb(195, 189, 189);
+  background-color: #3F37C9;
+}
+
+.logo {
+  font-family: 'Lobster', cursive;
+  color: white;
+  justify-self: start;
+  /* margin-left: 20px; */
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 2rem;
+}
+
+.center {
+  padding-left: 10px;
+}
+
+.center ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.center li {
+  display: flex;
+  align-items: center;
+  padding: 8px 5px;
+  cursor: pointer;
+}
+
+.center li:hover {
+  background-color: #ece8ff;
+}
+
+.center a {
+  text-decoration: none;
+}
+
+.center span {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(133, 126, 126);
+  margin-left: 10px;
+}
+
+.title {
+  font-size: 10px;
+  font-weight: bold;
+  color: rgb(185, 175, 175);
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.colorOption {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  margin: 5px;
+  border: 1px solid #7451f8;
+  cursor: pointer;
+}
+
+.colorOption:nth-child(1){
+  background-color: whitesmoke;
+}
+.colorOption:nth-child(2){
+  background-color: #333;
+}

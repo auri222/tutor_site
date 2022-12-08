@@ -1,0 +1,36 @@
+
+
+.pTContainer {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.pTTitle {
+  font-size: 24px;
+  color: #3F37C9;
+  font-weight: 600;
+}
+
+.pTTitle svg {
+  margin-right: 5px;
+}
+
+.pTDetailTitle {
+  font-size: 16px;
+}
+
+.pTDetailContent {
+  font-size: 16px;
+}
+
+.pTImg {
+  width: 180px;
+  height: 180px;
+}
+
+.pTCCCDImg {
+  width: 200px;
+  height: 180px;
+}

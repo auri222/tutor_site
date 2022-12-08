@@ -1,0 +1,23 @@
+.rTContainer {
+  background-color: #ecebff;
+  padding: 20px 0;
+  min-height: calc(100vh - 80px - 163.6px);
+}
+
+.rTCWrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.rTCTitle {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.rTCFPartTitle {
+  font-size: 18px;
+  font-weight: bold;
+}

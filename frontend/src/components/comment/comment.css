@@ -1,0 +1,35 @@
+
+.commentwrapper {
+  padding-left: 10px;
+  border-left: 3px solid #6d68c1;
+}
+
+.commentTitle {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.commentContent {
+  font-weight: 300;
+}
+
+.commentDatetime {
+  color: gray;
+  font-size: 13px;
+  margin-right: 10px;
+}
+
+.commentAction{
+  margin-right: 10px;
+  color: gray;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.commentAction:hover {
+  text-decoration: underline;
+}
+
+.commentReplies {
+  padding-left: 1rem;
+}

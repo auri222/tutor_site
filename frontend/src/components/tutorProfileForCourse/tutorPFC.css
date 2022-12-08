@@ -1,0 +1,65 @@
+.card {
+  width: 100%;
+}
+
+.optionButton {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.cTImgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ecebff;
+}
+
+.cTImg {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+}
+
+.cTCardBody p {
+  margin-bottom: 5px;
+}
+
+.cTCardTitle {
+  font-weight: 600;
+  color: #1f0b42;
+}
+
+.buttonChooseTutor {
+  border: 2px solid #fff;
+  outline: none;
+  padding: 8px 18px;
+  color: white;
+  /* background-color: #2b9195; */
+  background-color: #01c75d;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.buttonChooseTutor:hover {
+  border: 2px solid #04e46d;
+  background-color: #04e46d;
+}
+
+.buttonDetails {
+  border: 2px solid #ff5050;
+  outline: none;
+  padding: 8px 18px;
+  color: #ff5050;
+  background-color: transparent;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+
+.buttonDetails:hover {
+  color: white;
+  background-color: #ff5050;
+}
