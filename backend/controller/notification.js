@@ -59,6 +59,7 @@ const getNotifications = async (req, res, next) => {
     console.log(total);
 
     let loadRecord = parseInt(skip) + parseInt(limit);
+    let isLoadMore = false;
     if(loadRecord < total){
       isLoadMore = true;
     }

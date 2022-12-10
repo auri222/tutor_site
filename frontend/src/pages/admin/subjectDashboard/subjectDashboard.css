@@ -33,7 +33,14 @@
   margin-bottom: 10px;
 }
 
+.subjectsDBOption{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
 .subjectsDBTotal {
   padding-left: 5px;
-  margin-bottom: 15px;
 }

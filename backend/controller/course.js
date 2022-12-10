@@ -979,6 +979,8 @@ const getCourse = async (req, res, next) => {
         { account: chosenTutorID },
         { tutor_CCCD_image: 0, createdAt: 0, UpdatedAt: 0, _id: 0 }
       );
+      if(privateCourseTutor === null)
+        privateCourseTutor = {};
     }
 
     let candidates = [];
@@ -1004,7 +1006,8 @@ const getCourse = async (req, res, next) => {
             { account: chosenPublicCourseTutorID },
             { _id: 0, tutor_CCCD_image: 0, createdAt: 0, UpdatedAt: 0 }
           );
-          console.log(publicCourseTutor);
+          if(publicCourseTutor === null)
+            publicCourseTutor = {};
         }
       }
     }

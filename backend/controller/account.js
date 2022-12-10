@@ -7,6 +7,7 @@ const Course = require("../models/Course");
 const TutorAchievement = require("../models/TutorAchievement");
 const Notification = require("../models/Notification");
 const Comment = require("../models/Comment");
+const Contact = require("../models/Contact");
 const Tutor = require("../models/Tutor");
 const { getPublicId } = require("../ultilities/cloudinaryUltils");
 const cloudinary = require("cloudinary").v2;
@@ -315,6 +316,46 @@ const lockAccount = async (req, res, next) => {
     next(error);
   }
 };
+
+const lockAccountByUser = async (req, res, next) => {
+  const accountID = req.params.id;
+  try {
+    const account = await Account.findById(accountID);
+
+    if (!account) return next(createError(404, "Tài khoản không tồn tại"));
+
+    await Account.findByIdAndUpdate(accountID, { $set: { isLock: true } });
+
+    const content =  `Người dùng ${account.username} đã yêu cầu xóa tài khoản của họ.`;
+
+     // _id of Account Admin => if system have many admin account then loop through and send to all 
+    const newContact = new Contact({
+      content: content,
+      sender: account.username,
+      isCheck: false,
+      createdAt: new Date()
+    });
+
+    const newNotification = new Notification({
+      receiver: '638e4c36ec0debf428f7f6c0', 
+      sender: account.username,
+      type: 'SYSTEM',
+      message: content,
+      isRead: false,
+      typeID: null
+    });
+
+    await newContact.save();
+    await newNotification.save();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Yêu cầu xóa đã được gửi thành công! Chúng tôi sẽ xóa tài khoản trong khoản thời gian gần nhất! Trong khoảng thời gian đợi xóa, chúng tôi sẽ khóa tài khoản của bạn!" });
+
+  } catch (error) {
+    next(error);
+  }
+};
 const unlockAccount = async (req, res, next) => {
   const accountID = req.params.id;
   try {
@@ -569,4 +610,5 @@ module.exports = {
   deleteAccount,
   unlockAccount,
   accountStat,
+  lockAccountByUser
 };

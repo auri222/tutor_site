@@ -40,7 +40,7 @@ const Login = () => {
           title: "Hoàn thành",
           text: `${response.data.message}`,
           icon: "success",
-          timer: 1500
+          timer: 1000
         }).then(() => {
           if(response.data.details.accountType === 'ADMIN'){
             navigate('/dashboard');
@@ -53,13 +53,30 @@ const Login = () => {
       }
       
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Lỗi',
-        text: `${error.response.data.message}`,
-      });
-      dispatch({type: "LOGIN_FAILURE", payload: error.response.data});
-      setLoadingPage(false);
+      console.log(error);
+      if(error.response.status === 403){
+        Swal.fire({
+          title: "Cảnh báo",
+          text: `${error.response.data.message}`,
+          icon: "warning",
+          confirmButtonText: "Đi đến xác minh tài khoản",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch({type: "LOGIN_FAILURE", payload: error.response.data});
+            setLoadingPage(false);
+            navigate(`/otp/${error.response.data.user}`);
+          }
+        });
+
+      }else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Lỗi',
+          text: `${error.response.data.message}`,
+        });
+        dispatch({type: "LOGIN_FAILURE", payload: error.response.data});
+        setLoadingPage(false);
+      }
     }
   };
 
@@ -103,9 +120,9 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-3 text-end">
+          {/* <div className="mb-3 text-end">
             <Link to={''}>Quên mật khẩu?</Link>
-          </div>
+          </div> */}
 
           <button className="fButton" disabled={loading} type='submit' onClick={handleSubmit} >Đăng nhập</button>
           <div className="mb-3 text-center">

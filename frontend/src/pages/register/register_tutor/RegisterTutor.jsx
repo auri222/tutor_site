@@ -42,6 +42,7 @@ const Register_tutor = () => {
   const [profileImg, setProfileImg] = useState("");
   const [CCCDImg, setCCCDImg] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({});
 
   // Load data when page load
   useEffect(() => {
@@ -188,66 +189,187 @@ const Register_tutor = () => {
   };
 
   const handleChangeCCCDImg = (e) => {
-    if(e.target.files.length !== 0){
-    const files = Array.from(e.target.files || []);
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setCCCDImg((prev) => [...prev, reader.result]);
-      }
-      reader.readAsDataURL(file);
-    })
+    if (e.target.files.length !== 0) {
+      const files = Array.from(e.target.files || []);
+      files.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setCCCDImg((prev) => [...prev, reader.result]);
+        };
+        reader.readAsDataURL(file);
+      });
     }
-  }
+  };
+
+  const validateForm = () => {
+    let isValidate = true;
+    let err = {};
+
+    if (account.username === "") {
+      isValidate = false;
+      err["username"] = "Hãy nhập tên đăng nhập!";
+    }
+    if (account.birthday === "") {
+      isValidate = false;
+      err["birthday"] = "Hãy chọn ngày sinh!";
+    }
+    if (account.password === "") {
+      isValidate = false;
+      err["password"] = "Hãy nhập mật khẩu!";
+    }
+    if (account.password.length < 8) {
+      isValidate = false;
+      err["password"] = "Mật khẩu phải nhiều hơn 8 ký tự!";
+    }
+    if (!account.password.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)([\W]*).{8,}/)) {
+      isValidate = false;
+      err["password"] =
+        "Mật khẩu phải nhiều hơn 8 ký tự, bao gồm ký tự in hoa, in thường, số, có hoặc không có ký tự đặc biệt: !@#$%^* ...!";
+    }
+    if (account.confirm_password === "") {
+      isValidate = false;
+      err["confirm_password"] = "Hãy nhập xác nhận mật khẩu!";
+    }
+    if (account.confirm_password !== account.password) {
+      isValidate = false;
+      err["confirm_password"] = "Mật khẩu và xác nhận mật khẩu không khớp!";
+    }
+    if (account.CCCD === "") {
+      isValidate = false;
+      err["CCCD"] = "Hãy nhập số CCCD!";
+    }
+    if (account.email === "") {
+      isValidate = false;
+      err["email"] = "Hãy nhập địa chỉ email!";
+    }
+    if (
+      !account.email.match(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/
+      )
+    ) {
+      isValidate = false;
+      err["email"] = "Hãy nhập địa chỉ email hợp lệ!";
+    }
+    if (account.phone_number === "") {
+      isValidate = false;
+      err["phone_number"] = "Hãy nhập số điện thoại!";
+    }
+    if (account.phone_number.length <= 0 || account.phone_number.length > 10) {
+      isValidate = false;
+      err["phone_number"] = "Hãy nhập số điện thoại hợp lệ!";
+    }
+    if (account.home_number === "") {
+      isValidate = false;
+      err["home_number"] = "Hãy nhập số nhà!";
+    }
+    if (account.street === "") {
+      isValidate = false;
+      err["street"] = "Hãy nhập tên đường!";
+    }
+    if (account.ward === "") {
+      isValidate = false;
+      err["ward"] = "Hãy chọn phường xã!";
+    }
+    if (account.district === "") {
+      isValidate = false;
+      err["district"] = "Hãy chọn quận huyện!";
+    }
+    if (account.province === "") {
+      isValidate = false;
+      err["province"] = "Hãy chọn tỉnh thành!";
+    }
+    if (tutor.tutor_name === "") {
+      isValidate = false;
+      err["name"] = "Hãy nhập họ tên!";
+    }
+    if (tutor.tutor_occupation === "") {
+      isValidate = false;
+      err["occupation"] = "Hãy nhập nghề nghiệp hiện tại!";
+    }
+    if (selectedClasses.length < 0) {
+      isValidate = false;
+      err["classes"] = "Hãy chọn lớp giảng dạy!";
+    }
+    if (selectedSubjects.length < 0) {
+      isValidate = false;
+      err["subjects"] = "Hãy chọn môn giảng dạy!";
+    }
+    if (selectedSchedule.length < 0) {
+      isValidate = false;
+      err["schedules"] = "Hãy chọn lịch giảng dạy!";
+    }
+    if (profileImg === "") {
+      isValidate = false;
+      err["profileImg"] = "Hãy chọn ảnh profile!";
+    }
+    if (CCCDImg.length <= 0 || CCCDImg.length <= 1) {
+      isValidate = false;
+      err["CCCDImg"] = "Hãy chọn 2 ảnh CCCD mặt trước và sau";
+    }
+
+    setError(err);
+    return isValidate;
+  };
+  //Show list errors
+  const errorArr = Object.keys(error).map((k, i) => (
+    <li key={i}>{error[k]}</li>
+  ));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      const res = await axios.post(`http://localhost:8000/api/auth/register-tutor`, {
-        account: account,
-        tutor: tutor,
-        classes: selectedClasses,
-        subjects: selectedSubjects,
-        schedule: selectedSchedule,
-        profileImg: profileImg,
-        CCCDImg: CCCDImg
-      });
-      if(res.data.success){
-        setLoading(false);
-        Swal.fire({
-          title: "Hoàn thành",
-          text: `${res.data.message}`,
-          icon: "success",
-          confirmButtonText: "Đi tới xác minh tài khoản",
-        }).then((result) => {
-          if(result.isConfirmed){
-            navigate(`/otp/${res.data.account}`);
+      if (validateForm()) {
+        setLoading(true);
+        const res = await axios.post(
+          `http://localhost:8000/api/auth/register-tutor`,
+          {
+            account: account,
+            tutor: tutor,
+            classes: selectedClasses,
+            subjects: selectedSubjects,
+            schedule: selectedSchedule,
+            profileImg: profileImg,
+            CCCDImg: CCCDImg,
           }
-        });
+        );
+        if (res.data.success) {
+          setLoading(false);
+          Swal.fire({
+            title: "Hoàn thành",
+            text: `${res.data.message}`,
+            icon: "success",
+            confirmButtonText: "Đi tới xác minh tài khoản",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate(`/otp/${res.data.account}`);
+            }
+          });
+        }
       }
     } catch (error) {
-      if(!error.response.data.success){
+      if (!error.response.data.success) {
         Swal.fire({
-          icon: 'error',
-          title: 'Lỗi',
-          text: ''+error.response.data.message,
+          icon: "error",
+          title: "Lỗi",
+          text: "" + error.response.data.message,
         });
         setLoading(false);
       }
     }
-  }
+  };
 
   return (
     <div className="rTutor">
-      {loading && <div className="loader">
-        <ScaleLoader 
-          color="rgba(126, 208, 240, 1)" 
-          loading={loading}
-          size={50}
+      {loading && (
+        <div className="loader">
+          <ScaleLoader
+            color="rgba(126, 208, 240, 1)"
+            loading={loading}
+            size={50}
           />
-        <span>Đang xử lý. Hãy đợi một tí ...</span>
-      </div>}
+          <span>Đang xử lý. Hãy đợi một tí ...</span>
+        </div>
+      )}
       {/* START Bootstrạp container */}
       <div className="rContainer">
         <Link to="/home" style={{ color: "inherit", textDecoration: "none" }}>
@@ -400,12 +522,17 @@ const Register_tutor = () => {
                         />
                       </div>
                       <div className="col-md-12">
-                        {CCCDImg.length>0 && (
+                        {CCCDImg.length > 0 && (
                           <div className="previewCCCDImg">
-                            {CCCDImg.map((item,index) => (
-                              <img src={item} key={index} alt="Ảnh CCCD" className="prevItemCCCDImg" />
+                            {CCCDImg.map((item, index) => (
+                              <img
+                                src={item}
+                                key={index}
+                                alt="Ảnh CCCD"
+                                className="prevItemCCCDImg"
+                              />
                             ))}
-                        </div>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -708,8 +835,26 @@ const Register_tutor = () => {
             </div>
             <hr />
           </div>
+          <div className="row">
+            <div className="col-md-4"></div>
+            <div className="col-md-8">
+              <div className="mb-3">
+                {Object.keys(error).length !== 0 ? (
+                  <div className="mb-3">
+                    <div className="alert alert-warning mb-3" role="alert">
+                      {errorArr}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </div>
 
-          <button className="fButton" type="submit" onClick={handleSubmit}>Đăng ký</button>
+          <button className="fButton" type="submit" onClick={handleSubmit}>
+            Đăng ký
+          </button>
         </form>
       </div>
       {/* END Bootstrạp container */}

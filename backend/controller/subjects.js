@@ -12,6 +12,16 @@ const getSubjects = async (req, res, next) => {
   }
 }
 
+const getSubject = async (req, res, next) => {
+  const subjectID = req.params.id;
+  try {
+    const subject = await Subject.findById(subjectID);
+    res.status(200).json(subject);
+  } catch (error) {
+    next(error)
+  }
+}
+
 const createSubject = async (req, res, next) => {
   const {data} = req.body;
 
@@ -80,4 +90,4 @@ const editSubject = async (req, res, next) => {
 }
 
 
-module.exports = {getSubjects, createSubject, editSubject}
+module.exports = {getSubjects, createSubject, editSubject, getSubject}

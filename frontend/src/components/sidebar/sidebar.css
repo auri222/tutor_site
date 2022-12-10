@@ -4,6 +4,7 @@
   border-right: 0.5px solid rgb(195, 189, 189);
   flex: 1;
   min-height: 100vh;
+  
 }
 
 
@@ -39,8 +40,9 @@
 .center li {
   display: flex;
   align-items: center;
-  padding: 8px 5px;
+  padding: 10px 5px;
   cursor: pointer;
+  
 }
 
 .center li:hover {
@@ -52,14 +54,14 @@
 }
 
 .center span {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: rgb(133, 126, 126);
   margin-left: 10px;
 }
 
 .title {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   color: rgb(185, 175, 175);
   margin-top: 15px;

@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import "./register_user.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import ScaleLoader from 'react-spinners/ScaleLoader';
-import Swal from 'sweetalert2';
+import ScaleLoader from "react-spinners/ScaleLoader";
+import Swal from "sweetalert2";
 
 const Register_user = () => {
   const [data, setData] = useState({
@@ -23,7 +23,7 @@ const Register_user = () => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -95,48 +95,117 @@ const Register_user = () => {
     });
   };
 
+  const validateForm = () => {
+    let isValidate = true;
+    let err = {};
+
+    if (data.username === "") {
+      isValidate = false;
+      err["username"] = "Hãy nhập tên đăng nhập!";
+    }
+    if (data.birthday === "") {
+      isValidate = false;
+      err["birthday"] = "Hãy chọn ngày sinh!";
+    }
+    if (data.CCCD === "") {
+      isValidate = false;
+      err["CCCD"] = "Hãy nhập số CCCD!";
+    }
+    if (data.email === "") {
+      isValidate = false;
+      err["email"] = "Hãy nhập địa chỉ email!";
+    }
+    if (
+      !data.email.match(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/
+      )
+    ) {
+      isValidate = false;
+      err["email"] = "Hãy nhập địa chỉ email hợp lệ!";
+    }
+    if (data.phone_number === "") {
+      isValidate = false;
+      err["phone_number"] = "Hãy nhập số điện thoại!";
+    }
+    if (data.phone_number.length <= 0 || data.phone_number.length > 10) {
+      isValidate = false;
+      err["phone_number"] = "Hãy nhập số điện thoại hợp lệ!";
+    }
+    if (data.home_number === "") {
+      isValidate = false;
+      err["home_number"] = "Hãy nhập số nhà!";
+    }
+    if (data.street === "") {
+      isValidate = false;
+      err["street"] = "Hãy nhập tên đường!";
+    }
+    if (data.ward === "") {
+      isValidate = false;
+      err["ward"] = "Hãy chọn phường xã!";
+    }
+    if (data.district === "") {
+      isValidate = false;
+      err["district"] = "Hãy chọn quận huyện!";
+    }
+    if (data.province === "") {
+      isValidate = false;
+      err["province"] = "Hãy chọn tỉnh thành!";
+    }
+
+    setError(err);
+    return isValidate;
+  };
+  //Show list errors
+  const errorArr = Object.keys(error).map((k, i) => (
+    <li key={i}>{error[k]}</li>
+  ));
+
   // Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      setLoading(true);
-      const url = "http://localhost:8000/api/auth/register-user";
-      const res = await axios.post(url, data);
-      if(res.data.success){
-        setLoading(false);
-        Swal.fire({
-          title: "Hoàn thành",
-          text: `${res.data.message}`,
-          icon: "success",
-          confirmButtonText: "Đi tới xác thực tài khoản",
-        }).then((result) => {
-          if(result.isConfirmed){
-            navigate(`/otp/${res.data.account}`);
-          }
-        });
+      if (validateForm()) {
+        setLoading(true);
+        const url = "http://localhost:8000/api/auth/register-user";
+        const res = await axios.post(url, data);
+        if (res.data.success) {
+          setLoading(false);
+          Swal.fire({
+            title: "Hoàn thành",
+            text: `${res.data.message}`,
+            icon: "success",
+            confirmButtonText: "Đi tới xác thực tài khoản",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate(`/otp/${res.data.account}`);
+            }
+          });
+        }
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response <= 500
-      ) {
-        setError(error.response.data.message);
+      if (!error.response.data.success) {
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: "" + error.response.data.message,
+        });
       }
     }
   };
 
   return (
     <div className="rUser">
-      {loading && <div className="loader">
-        <ScaleLoader 
-          color="rgba(126, 208, 240, 1)" 
-          loading={loading}
-          size={50}
+      {loading && (
+        <div className="loader">
+          <ScaleLoader
+            color="rgba(126, 208, 240, 1)"
+            loading={loading}
+            size={50}
           />
-        <span>Đang xử lý. Hãy đợi một tí ...</span>
-      </div>}
+          <span>Đang xử lý. Hãy đợi một tí ...</span>
+        </div>
+      )}
       <div className="rUContainer">
         <Link to="/home" style={{ color: "inherit", textDecoration: "none" }}>
           <div className="rULogo">TutorSite</div>
@@ -354,15 +423,25 @@ const Register_user = () => {
                   </div>
                 </div>
               </div>
+
+              <div className="mb-3">
+                {Object.keys(error).length !== 0 ? (
+                  <div className="mb-3">
+                    <div className="alert alert-warning mb-3" role="alert">
+                      {errorArr}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
             <hr />
           </div>
-          {error && (
-            <div class="alert alert-warning mb-3" role="alert">
-              {error}
-            </div>
-          )}
-          <button className="fButton" type="submit" onClick={handleSubmit}>Đăng ký</button>
+
+          <button className="fButton" type="submit" onClick={handleSubmit}>
+            Đăng ký
+          </button>
         </form>
       </div>
     </div>

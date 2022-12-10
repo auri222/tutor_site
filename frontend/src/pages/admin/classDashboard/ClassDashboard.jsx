@@ -6,9 +6,9 @@ import DashboardNav from "../../../components/dashboardNav/DashboardNav";
 import { useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+
 
 const ClassDashboard = () => {
   const [total, setTotal] = useState(0);
@@ -34,6 +34,10 @@ const ClassDashboard = () => {
     navigate('/dashboard/class/create');
   }
 
+  const handleEdit = (id) => {
+    navigate(`/dashboard/class/edit/${id}`);
+  }
+
   return (
     <div className="classesDB">
       <Sidebar />
@@ -41,7 +45,7 @@ const ClassDashboard = () => {
         <DashboardNav />
         <div className="classesDBWrapper">
           <div className="classesDBTitle">Dữ liệu lớp học</div>
-          <hr />
+
           <div className="classesDBOption">
           <div className="classesDBTotal">Tổng số: {total}</div>
           <div className="classesDBCreate">
@@ -73,6 +77,7 @@ const ClassDashboard = () => {
                           data-bs-toggle="tooltip"
                           data-bs-placement="top"
                           title="CLick để sửa"
+                          onClick={() => {handleEdit(item._id)}}
                         >
                           <FontAwesomeIcon icon={faPenToSquare} />
                         </button>

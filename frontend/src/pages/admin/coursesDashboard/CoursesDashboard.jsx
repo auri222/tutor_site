@@ -63,7 +63,7 @@ const CoursesDashboard = () => {
         <DashboardNav />
         <div className="coursesDBWrapper">
           <div className="coursesDBTitle">Danh sách khóa học</div>
-          <hr />
+
           <div className="coursesDBSearch">
             <div className="coursesDBTotal">Tổng số: {total}</div>
             <div className="coursesDBSearchOption">

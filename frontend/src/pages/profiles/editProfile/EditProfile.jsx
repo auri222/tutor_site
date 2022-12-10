@@ -5,7 +5,7 @@ import Footer from "../../../components/footer/Footer";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const EditProfile = () => {
   const styleCustom = {
@@ -30,7 +30,7 @@ const EditProfile = () => {
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
   const navigate = useNavigate();
-
+  const [error, setError] = useState({});
 
   // Fetch province data
   useEffect(() => {
@@ -96,9 +96,9 @@ const EditProfile = () => {
       street: account?.address?.street || "",
       province: account?.address?.province,
       district: account?.address?.district,
-      ward: account?.address?.ward
-    }))
-  }, [account])
+      ward: account?.address?.ward,
+    }));
+  }, [account]);
 
   const handleDistrictChange = (e) => {
     setData({
@@ -131,33 +131,100 @@ const EditProfile = () => {
   const handleChange = (event) =>
     setData({ ...data, [event.target.id]: event.target.value });
 
+  const validateForm = () => {
+    let isValidate = true;
+    let err = {};
+
+    if (data.username === "") {
+      isValidate = false;
+      err["username"] = "Hãy nhập tên đăng nhập!";
+    }
+    if (data.birthday === "") {
+      isValidate = false;
+      err["birthday"] = "Hãy chọn ngày sinh!";
+    }
+    if (data.CCCD === "") {
+      isValidate = false;
+      err["CCCD"] = "Hãy nhập số CCCD!";
+    }
+    if (data.email === "") {
+      isValidate = false;
+      err["email"] = "Hãy nhập địa chỉ email!";
+    }
+    if (
+      !data.email.match(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/
+      )
+    ) {
+      isValidate = false;
+      err["email"] = "Hãy nhập địa chỉ email hợp lệ!";
+    }
+    if (data.phone_number === "") {
+      isValidate = false;
+      err["phone_number"] = "Hãy nhập số điện thoại!";
+    }
+    if (data.phone_number.length <= 0 || data.phone_number.length > 10) {
+      isValidate = false;
+      err["phone_number"] = "Hãy nhập số điện thoại hợp lệ!";
+    }
+    if (data.home_number === "") {
+      isValidate = false;
+      err["home_number"] = "Hãy nhập số nhà!";
+    }
+    if (data.street === "") {
+      isValidate = false;
+      err["street"] = "Hãy nhập tên đường!";
+    }
+    if (data.ward === "") {
+      isValidate = false;
+      err["ward"] = "Hãy chọn phường xã!";
+    }
+    if (data.district === "") {
+      isValidate = false;
+      err["district"] = "Hãy chọn quận huyện!";
+    }
+    if (data.province === "") {
+      isValidate = false;
+      err["province"] = "Hãy chọn tỉnh thành!";
+    }
+
+    setError(err);
+    return isValidate;
+  };
+  //Show list errors
+  const errorArr = Object.keys(error).map((k, i) => (
+    <li key={i}>{error[k]}</li>
+  ));
+
   // Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // setLoading(true);
-      const url = `http://localhost:8000/api/account/edit/${user._id}`;
-      const res = await axios.put(url, data, {withCredentials: true});
-      if (res.data.success) {
-        Swal.fire({
-          title: "Hoàn thành",
-          text: `${res.data.message}`,
-          icon: "success",
-          confirmButtonText: "Xong",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate(`/profile/${user._id}`);
-          }
-        });
+      if (validateForm()) {
+        // setLoading(true);
+        const url = `http://localhost:8000/api/account/edit/${user._id}`;
+        const res = await axios.put(url, data, { withCredentials: true });
+        if (res.data.success) {
+          Swal.fire({
+            title: "Hoàn thành",
+            text: `${res.data.message}`,
+            icon: "success",
+            confirmButtonText: "Xong",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate(`/profile/${user._id}`);
+            }
+          });
+        }
       }
     } catch (error) {
-      if(!error.response.data.success){
+      if (!error.response.data.success) {
         Swal.fire({
-          icon: 'error',
-          title: 'Lỗi',
-          text: ''+error.response.data.message,
-        })
+          icon: "error",
+          title: "Lỗi",
+          text: "" + error.response.data.message,
+        });
       }
     }
   };
@@ -168,8 +235,8 @@ const EditProfile = () => {
     let m1 = d.getMonth() + 1;
     let y1 = d.getFullYear();
 
-    return `${y1}-${m1<10? "0"+m1 : m1}-${d1 <10? "0"+d1 : d1}`;
-  }
+    return `${y1}-${m1 < 10 ? "0" + m1 : m1}-${d1 < 10 ? "0" + d1 : d1}`;
+  };
 
   return (
     <>
@@ -194,7 +261,7 @@ const EditProfile = () => {
                         id="username"
                         className="form-control"
                         placeholder="Nhập tên đăng nhập"
-                        value={data?.username ||''}
+                        value={data?.username || ""}
                         required
                         onChange={handleChange}
                       />
@@ -227,7 +294,7 @@ const EditProfile = () => {
                         id="email"
                         className="form-control"
                         placeholder="vidu@gmail.com"
-                        value={data?.email || ''}
+                        value={data?.email || ""}
                         required
                         onChange={handleChange}
                       />
@@ -240,7 +307,7 @@ const EditProfile = () => {
                         id="phone_number"
                         className="form-control"
                         placeholder="0834759xxx"
-                        value={data?.phone_number||''}
+                        value={data?.phone_number || ""}
                         onChange={handleChange}
                       />
                     </div>
@@ -261,7 +328,7 @@ const EditProfile = () => {
                         id="CCCD"
                         className="form-control"
                         placeholder="0834759xxx"
-                        value={data?.CCCD || ''}
+                        value={data?.CCCD || ""}
                         required
                         onChange={handleChange}
                       />
@@ -276,7 +343,7 @@ const EditProfile = () => {
                             id="home_number"
                             className="form-control"
                             placeholder="Số 123/H2"
-                            value={data?.home_number || ''}
+                            value={data?.home_number || ""}
                             onChange={handleChange}
                           />
                         </div>
@@ -287,7 +354,7 @@ const EditProfile = () => {
                             id="street"
                             className="form-control"
                             placeholder="Đường 3/2"
-                            value={data?.street || ''}
+                            value={data?.street || ""}
                             onChange={handleChange}
                           />
                         </div>
@@ -302,19 +369,19 @@ const EditProfile = () => {
                             id="province"
                             className="form-control"
                             onChange={handleProvinceChange}
-                            defaultValue={'DEFAULT'}
+                            defaultValue={"DEFAULT"}
                           >
-                            <option value={'DEFAULT'} disabled>--Chọn tỉnh thành--</option>
+                            <option value={"DEFAULT"} disabled>
+                              --Chọn tỉnh thành--
+                            </option>
                             {provinces ? (
                               provinces.map((province) => (
-                                
-                                  <option
-                                    key={province.code}
-                                    value={province.code}
-                                  >
-                                    {province.name_with_type}
-                                  </option>
-                                
+                                <option
+                                  key={province.code}
+                                  value={province.code}
+                                >
+                                  {province.name_with_type}
+                                </option>
                               ))
                             ) : (
                               <option disabled>--Chọn tỉnh thành--</option>
@@ -327,24 +394,22 @@ const EditProfile = () => {
                             id="district"
                             className="form-control"
                             onChange={handleDistrictChange}
-                            defaultValue={'DEFAULT'}
+                            defaultValue={"DEFAULT"}
                           >
-                            <option value={'DEFAULT'} disabled>
-                                --Chọn quận huyện--
-                              </option>
+                            <option value={"DEFAULT"} disabled>
+                              --Chọn quận huyện--
+                            </option>
                             {districts ? (
                               districts.map((district) => (
-                                  <option
+                                <option
                                   key={district.code}
                                   value={district.code}
                                 >
                                   {district.name_with_type}
                                 </option>
-                              )
-                            )) : (
-                              <option disabled >
-                                --Chọn quận huyện--
-                              </option>
+                              ))
+                            ) : (
+                              <option disabled>--Chọn quận huyện--</option>
                             )}
                           </select>
                         </div>
@@ -354,30 +419,43 @@ const EditProfile = () => {
                             id="ward"
                             className="form-control"
                             onChange={handleWardChange}
-                            defaultValue={'DEFAULT'}
+                            defaultValue={"DEFAULT"}
                           >
-                            <option value={'DEFAULT'} disabled>
-                                --Chọn phường xã--
-                              </option>
+                            <option value={"DEFAULT"} disabled>
+                              --Chọn phường xã--
+                            </option>
                             {wards ? (
                               wards.map((ward) => (
-                                  <option key={ward.code} value={ward.code}>
+                                <option key={ward.code} value={ward.code}>
                                   {ward.name_with_type}
                                 </option>
-                                )
-                              )
+                              ))
                             ) : (
-                              <option disabled >
-                                --Chọn phường xã--
-                              </option>
+                              <option disabled>--Chọn phường xã--</option>
                             )}
                           </select>
                         </div>
                       </div>
-                      <small>Không cần chọn tỉnh thành, quận huyện, phường xã nếu không bạn muốn sửa</small>
+                      <small>
+                        Không cần chọn tỉnh thành, quận huyện, phường xã nếu
+                        không bạn muốn sửa
+                      </small>
                     </div>
-                    
 
+                    <div className="mb-3">
+                      {Object.keys(error).length !== 0 ? (
+                        <div className="mb-3">
+                          <div
+                            className="alert alert-warning mb-3"
+                            role="alert"
+                          >
+                            {errorArr}
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </div>
                   <hr />
                 </div>

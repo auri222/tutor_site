@@ -101,6 +101,21 @@ const editClass = async (req, res, next) => {
   }
 }
 
+const getClass = async (req, res, next) => {
+  const classID = req.params.id;
+  try {
+    const classInfo = await Class.findById(classID);
+
+    if(!classInfo)
+      next(createError(404, "Không tìm thấy dữ liệu lớp!"));
+    
+    res.status(200).json(classInfo);
+
+  } catch (error) {
+    next(error); 
+  }
+}
+
 // const deleteClass = async (req, res, next) => {
 //   const classID = req.params.id;
 //   try {
@@ -125,4 +140,4 @@ const editClass = async (req, res, next) => {
 
 // }
 
-module.exports = { getClasses, createClass, editClass };
+module.exports = { getClasses, createClass, editClass, getClass };

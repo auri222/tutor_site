@@ -18,7 +18,7 @@ import Comment from "../../../components/comment/Comment";
 
 const Profile = () => {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
   const [account, setAccount] = useState([]);
   const [tutorProfile, settutorProfile] = useState([]);
@@ -150,7 +150,7 @@ const Profile = () => {
     console.log(`Add comment: ${text}`);
     try {
       if(text !== ""){
-        if(user !== null){
+        if(user !== null){ //Logged in can add comment
           if(user?._id !== id){
               const res = await axios.post(`http://localhost:8000/api/comment/create`, {comment: {
                 content: text,
@@ -164,7 +164,7 @@ const Profile = () => {
                   setTotalComments(res1.data.total);
                 }
               }
-          } else {
+          } else if (parentID && parentID !== null) {
             const res = await axios.post(`http://localhost:8000/api/comment/create`, {comment: {
                 content: text,
                 reviewer: user?.username
@@ -179,6 +179,12 @@ const Profile = () => {
                   
                 }
               }
+          } else{
+            Swal.fire({
+              icon: "warning",
+              title: "Cảnh báo",
+              text: "Bạn chỉ có thể phản hồi lại bình luận!",
+            });
           }
         }
         else {
@@ -282,6 +288,49 @@ const Profile = () => {
     }
   }
 
+  const handleDeleteAccount = async () => {
+    try {
+      const confirm = await Swal.fire({
+        title: "Cảnh bác",
+        text: `Bạn có chắc sẽ xóa tài khoản của mình này?`,
+        icon: "warning",
+        confirmButtonText: "Chắc chắn",
+        cancelButtonText: "Đóng",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+      });
+
+      if(confirm && confirm.isConfirmed) {
+        const res = await axios.put(`http://localhost:8000/api/account/deleteAccount/${user._id}`, {}, {withCredentials:true});
+        if(res.data.success){
+          const logOut = await Swal.fire({
+            title: "Hoàn thành",
+            text: `${res.data.message}`,
+            icon: "success",
+            confirmButtonText: "Đăng xuất và thoát",
+          });
+          if(logOut && logOut.isConfirmed){
+            const res1 = await axios.get(`http://localhost:8000/api/auth/logOut/${user._id}`);
+              if(res1.data.success){
+                dispatch({type: "LOGOUT"});
+                localStorage.setItem("user", null);
+                navigate('/', { replace: true });
+              }
+          }
+        }
+      }
+    } catch (error) {
+      if (!error.response.data.success) {
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: "" + error.response.data.message,
+        });
+      }
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -337,6 +386,11 @@ const Profile = () => {
                     <div className="settingItem">
                       <Link to={`/profile/edit/password/${id}`}>
                         <span>Thay đổi mật khẩu</span>
+                      </Link>
+                    </div>
+                    <div className="settingItem">
+                      <Link onClick={handleDeleteAccount}>
+                        <span>Xóa tài khoản</span>
                       </Link>
                     </div>
 

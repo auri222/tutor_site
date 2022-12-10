@@ -1,24 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
 
-.classesDB {
+.subjectDB {
   display: flex;
   width: 100%;
 }
 
-.classesDBContainer{
+.subjectDBContainer{
   flex: 6;
 }
 
-.classesDBWrapper {
+.subjectDBWrapper {
   min-height: calc(100vh-50px);
   padding: 20px;
 }
 
-.classesDBWrapper hr {
+.subjectDBWrapper hr {
   margin-top: 15px;
 }
 
-.classesDBTitle {
+.subjectDBTitle {
   font-size: 30px;
   font-family: 'Lalezar', cursive;
   color: #3F37C9;
@@ -26,7 +26,7 @@
   margin-bottom: 10px;
 }
 
-.classesDBSearch{
+.subjectDBSearch{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -34,17 +34,17 @@
   margin-bottom: 10px;
 }
 
-.classesDBForm {
+.subjectDBForm {
   padding: 10px;
   border: 0.5px solid rgb(195, 189, 189);
   border-radius: 10px;
 }
 
-.classesDBForm label{
+.subjectDBForm label{
   margin-bottom: 5px;
 }
 
-.btnCreateClassDB {
+.btnCreateSubjectDB {
   border: none;
   border-radius: 5px;
   padding: 5px 24px;
@@ -54,6 +54,6 @@
   color: white;
   background-color: #3F37C9;
 }
-.btnCreateClassDB:hover {
+.btnCreateSubjectDB:hover {
   opacity: 0.8;
 }

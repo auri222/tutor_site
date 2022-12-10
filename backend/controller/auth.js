@@ -31,6 +31,7 @@ const register_user = async (req, res, next) => {
   const isVerify = false;
   const isActive = false;
   const isAdmin = false;
+  const isLock = false;
   const OTP = await createOTP().toString();
   const accountType = "USER";
   const token = "trống";
@@ -74,6 +75,7 @@ const register_user = async (req, res, next) => {
       OTP: OTP,
       accountType: accountType,
       token: token,
+      isLock: isLock
     });
     await newAccount.save();
 
@@ -232,6 +234,7 @@ const register_tutor = async (req, res, next) => {
     const isVerify = false;
     const isActive = false;
     const isAdmin = false;
+    const isLock = false;
     const OTP = await createOTP().toString();
     const accountType = "TUTOR";
     const token = "trống";
@@ -280,6 +283,7 @@ const register_tutor = async (req, res, next) => {
       OTP: OTP,
       accountType: accountType,
       token: token,
+      isLock: isLock
     });
     await newAccount.save();
 
@@ -455,8 +459,11 @@ const login = async (req, res, next) => {
         .status(400)
         .json({ status: false, message: "Sai tên đăng nhập hoặc mật khẩu!" });
 
+    if(!user.isVerify)
+      return res.status(403).json({success: false, message: "Tài khoản của bạn chưa được xác minh. Hãy nhập mã OTP mà chúng tôi đã gửi mail cho bạn vào trang xác nhận OTP.", user: user._id});
+
     if(user.isLock)
-      return next(createError(403, "Tài khoản của bạn hiện đã bị khóa. Vui lòng liên hệ để biết thêm chi tiết!"));
+      return next(createError(401, "Tài khoản của bạn hiện đã bị khóa. Vui lòng liên hệ để biết thêm chi tiết!"));
     // Username & password OK
     // Create token for login
     const accessToken = jwt.sign(

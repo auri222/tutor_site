@@ -1,19 +1,49 @@
-import "./createClassDashboard.css";
-import React from "react";
-import { useState } from "react";
+import './editSubjectDB.css';
+import { useState, useEffect } from "react";
 import Sidebar from "../../../components/sidebar/Sidebar";
 import DashboardNav from "../../../components/dashboardNav/DashboardNav";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CreateClassDashboard = () => {
+
+const EditSubjectDB = () => {
+  const {id} = useParams();
+  const [loadData, setLoadData] = useState([]);
   const [data, setData] = useState({
     name: "",
     code: "",
   });
   const navigate = useNavigate();
   const [error, setError] = useState({});
+
+  useEffect(() => {
+    const loadClass = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/subject/${id}`,
+          { withCredentials: true }
+        );
+        if(res.data){
+          setLoadData(res.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    loadClass();
+
+  }, [id]);
+
+  useEffect(() => {
+    if(loadData){
+      setData((prev) => ({
+        ...prev,
+        name: loadData?.name || "",
+        code: loadData?.code || ""
+      }))
+    }
+  }, [loadData])
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
@@ -25,22 +55,22 @@ const CreateClassDashboard = () => {
 
     if (data.name === "") {
       isValidate = false;
-      err["name"] = "Hãy nhập tên lớp!";
+      err["name"] = "Hãy nhập tên môn!";
     }
 
-    if (data.name.startsWith("Lớp") === false) {
+    if (data.name.startsWith("Môn")) {
       isValidate = false;
-      err["name"] = "Hãy nhập tên lớp bắt đầu bằng từ Lớp!";
+      err["name"] = "Bạn không cần nhập chữ Môn cho môn cần thêm";
     }
 
     if (data.code === "") {
       isValidate = false;
-      err["code"] = "Hãy nhập mã lớp!";
+      err["code"] = "Hãy nhập mã môn!";
     }
 
-    if (data.code.startsWith("L") === false) {
+    if (data.code.startsWith("M") === false) {
       isValidate = false;
-      err["code"] = "Hãy nhập mã lớp bắt đầu bằng từ L!";
+      err["code"] = "Hãy nhập mã môn bắt đầu bằng từ M!";
     }
 
     setError(err);
@@ -56,8 +86,8 @@ const CreateClassDashboard = () => {
     e.preventDefault();
     try {
       if (validateForm()) {
-        const res = await axios.post(
-          "http://localhost:8000/api/class/create",
+        const res = await axios.put(
+          `http://localhost:8000/api/subject/edit/${id}`,
           { data: data },
           { withCredentials: true }
         );
@@ -69,7 +99,7 @@ const CreateClassDashboard = () => {
             confirmButtonText: "Xong",
           }).then((result) => {
             if (result.isConfirmed) {
-              navigate(`/dashboard/class`, {
+              navigate(`/dashboard/subject`, {
                 replace: true,
               }); //replace: true => cannot going back to this page
             }
@@ -88,34 +118,36 @@ const CreateClassDashboard = () => {
   };
 
   return (
-    <div className="classesDB">
+    <div className="subjectDB">
       <Sidebar />
-      <div className="classesDBContainer">
+      <div className="subjectDBContainer">
         <DashboardNav />
-        <div className="classesDBWrapper">
-          <div className="classesDBTitle">Thêm dữ liệu lớp học</div>
+        <div className="subjectDBWrapper">
+          <div className="subjectDBTitle">Sửa dữ liệu môn học</div>
 
-          <div className="classesDBForm">
+          <div className="subjectDBForm">
             <form>
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <label htmlFor="name">Tên lớp học</label>
+                  <label htmlFor="name">Tên môn học</label>
                   <input
                     type="text"
                     id="name"
                     className="form-control"
-                    placeholder="Lớp toán"
+                    placeholder="Toán"
+                    value={data.name || ""}
                     required
                     onChange={handleChange}
                   />
                 </div>
                 <div className="col-md-6">
-                  <label htmlFor="code">Mã lớp học</label>
+                  <label htmlFor="code">Mã môn học</label>
                   <input
                     type="text"
                     id="code"
                     className="form-control"
-                    placeholder="Lớp 1 - L1"
+                    placeholder="MT"
+                    value={data.code || ""}
                     required
                     onChange={handleChange}
                   />
@@ -134,18 +166,18 @@ const CreateClassDashboard = () => {
               </div>
 
               <button
-                className="btnCreateClassDB"
+                className="btnCreateSubjectDB"
                 type="submit"
                 onClick={handleSubmit}
               >
-                Thêm dữ liệu
+                Sửa dữ liệu
               </button>
             </form>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateClassDashboard;
+export default EditSubjectDB

@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
+.page404ClientContainer {
+  background-color: #ecebff; 
+  z-index: 1;
+  min-height: calc(100vh - 80px - 163.6px);
+  padding: 20px 0px;
+}
+
+.page404ClientWrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  padding: 20px;
+}
+
+.page404ClientTitle {
+  font-family: 'Black Ops One', cursive;
+}
+
+.homeLink {
+  text-decoration: none;
+}

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getSubjects, createSubject, editSubject} = require('../controller/subjects');
+const {getSubjects, createSubject, editSubject, getSubject} = require('../controller/subjects');
 
 // @route GET api/subjects
 // @desc GET subjects
@@ -16,5 +16,10 @@ router.post('/create', createSubject)
 // @desc EDIT subjects
 // @access Public
 router.put('/edit/:id', editSubject)
+
+// @route GET api/subject
+// @desc GET subject
+// @access Public
+router.get('/:id', getSubject)
 
 module.exports = router;

@@ -4,7 +4,7 @@ const router = express.Router()
 const {verifyToken} = require('../ultilities/verifyToken');
 const {verifyUserLoggedIn} = require('../ultilities/verifyUserLoggedIn');
 const {verifyAdmin} = require('../ultilities/verifyAdmin');
-const {getUsersList, countAdmins, countTutors, countUsers, editPassword, editAccountInfo, getAccount, countCourse, countContacts, getAllUsers, deleteAccount, lockAccount, unlockAccount, accountStat} = require('../controller/account');
+const {getUsersList, countAdmins, countTutors, countUsers, editPassword, editAccountInfo, getAccount, countCourse, countContacts, getAllUsers, deleteAccount, lockAccount, unlockAccount, accountStat, lockAccountByUser} = require('../controller/account');
 
 // // @route POST api/accounts
 // // @desc Create account admin (Admin ONLY) 
@@ -54,7 +54,12 @@ router.get('/', verifyToken, verifyAdmin, getUsersList)
 router.put('/edit/:id', verifyToken, verifyUserLoggedIn, editAccountInfo)
 
 // @route PUT api/accounts
-// @desc Lock account (logged in)
+// @desc Lock account (logged in) => Accept user & tutor to send a request to delete their account
+// @access Private
+router.put('/deleteAccount/:id', verifyToken, verifyUserLoggedIn, lockAccountByUser)
+
+// @route PUT api/accounts
+// @desc Lock account (logged in) => Accept user & tutor to send a request to delete their account
 // @access Private
 router.put('/lock/:id', verifyToken, verifyAdmin, lockAccount)
 

@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Login from './pages/login/Login';
 import Home from './pages/home/Home';
@@ -27,13 +27,32 @@ import ProfileAdmin from './pages/admin/profileAdmin/ProfileAdmin';
 import CoursesDashboard from './pages/admin/coursesDashboard/CoursesDashboard';
 import ClassDashboard from './pages/admin/classDashboard/ClassDashboard';
 import SubjectDashboard from './pages/admin/subjectDashboard/SubjectDashboard';
+import CreateSubjectDB from './pages/admin/createSubjectDB/CreateSubjectDB';
+import EditSubjectDB from './pages/admin/editSubjectDB/EditSubjectDB';
 import CreateClassDashboard from './pages/admin/createClassDashboard/CreateClassDashboard';
+import EditClassDashboard from './pages/admin/editClassDashboard/EditClassDashboard';
 import AccountDetailsDB from './pages/admin/accountDetailsDB/AccountDetailsDB';
 import CourseDetailDB from './pages/admin/courseDetailsDB/CourseDetailDB';
 import ContactPage from './pages/contactPage/ContactPage';
 import NotificationDB from './pages/admin/notificationDB/NotificationDB';
+import Page404Client from './pages/notFound/404Client/Page404Client';
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
 
 function App() {
+  const ProtectedRoute = ({children}) => {
+    const {user} = useContext(AuthContext);
+
+    if(!user){
+      return <Navigate to="/login" />
+    }
+
+    else if(user?.isAdmin === false){
+      return <Navigate to="/login" />
+    }
+
+    return children;
+  }
   
   return (
     <BrowserRouter>
@@ -49,32 +68,35 @@ function App() {
           <Route index element={<Notification />} />
         </Route>
         <Route path='dashboard'>
-          <Route index element={<Dashboard />} />
+          <Route index element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path='profile'>
-            <Route index path=':id' element={<ProfileAdmin />}/>
+            <Route index path=':id' element={<ProtectedRoute><ProfileAdmin /></ProtectedRoute>}/>
           </Route>
           <Route path='account'>
-            <Route index element={<ListAccount />} />
-            <Route path='details/:id' element={<AccountDetailsDB />} />
+            <Route index element={<ProtectedRoute><ListAccount /></ProtectedRoute>} />
+            <Route path='details/:id' element={<ProtectedRoute><AccountDetailsDB /></ProtectedRoute>} />
             {/* Xem */}
           </Route>
           <Route path='course'>
-            <Route index element={<CoursesDashboard />}/>
-            <Route path='details/:id' element={<CourseDetailDB />}/>
+            <Route index element={<ProtectedRoute><CoursesDashboard /></ProtectedRoute>}/>
+            <Route path='details/:id' element={<ProtectedRoute><CourseDetailDB /></ProtectedRoute>}/>
             
             {/* Xem */}
           </Route>
           <Route path='class'>
-            <Route index element={<ClassDashboard />} />
-            <Route path='create' element={<CreateClassDashboard />} />
+            <Route index element={<ProtectedRoute><ClassDashboard /></ProtectedRoute>} />
+            <Route path='create' element={<ProtectedRoute><CreateClassDashboard /></ProtectedRoute>} />
+            <Route path='edit/:id' element={<ProtectedRoute><EditClassDashboard /></ProtectedRoute>} />
             {/* Xem */}
           </Route>
           <Route path='subject'>
-            <Route index element={<SubjectDashboard />} />
+            <Route index element={<ProtectedRoute><SubjectDashboard /></ProtectedRoute>} />
+            <Route path='create' element={<ProtectedRoute><CreateSubjectDB /></ProtectedRoute>} />
+            <Route path='edit/:id' element={<ProtectedRoute><EditSubjectDB /></ProtectedRoute>} />
             {/* Xem */}
           </Route>
           <Route path='notification'>
-            <Route index element={<NotificationDB />}/>
+            <Route index element={<ProtectedRoute><NotificationDB /></ProtectedRoute>}/>
             {/* Xem */}
           </Route>
         </Route>
@@ -103,6 +125,7 @@ function App() {
             <Route path='password/:id' element={<EditPassword />}/>
           </Route>
         </Route>
+        <Route path='/notfound' element={<Page404Client />} />
       </Routes>
     </BrowserRouter>
   );

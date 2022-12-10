@@ -22,7 +22,7 @@ const Course = () => {
   const { id } = useParams(); // CourseID
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [course, setCourse] = useState([]);
+  const [course, setCourse] = useState({});
   const [publicCourseTutor, setPublicCourseTutor] = useState({});
   const [privateCourseTutor, setPrivateCourseTutor] = useState({});
   const [candidates, setCandidates] = useState([]);
@@ -35,6 +35,8 @@ const Course = () => {
         const res = await axios.get(`http://localhost:8000/api/course/${id}`);
 
         if (res.data) {
+          // console.log(res.data);
+          // console.log(res.data.course);
           setCourse(res.data.course);
           setCandidates(res.data.candidates);
           setPublicCourseTutor(res.data.publicCourseTutor);
@@ -48,13 +50,6 @@ const Course = () => {
     fetchCourse();
   }, [id]);
 
-  //Load data
-  useEffect(() => {}, []);
-
-  useEffect(() => {
-    console.log(publicCourseTutor);
-    console.log(privateCourseTutor);
-  }, [publicCourseTutor, privateCourseTutor])
 
   //Choose tutor for public course
   const handleChooseTutor = async (tutorID) => {
@@ -468,7 +463,8 @@ const Course = () => {
         )}
         <div className="container">
           <div className="courseWrapper">
-            {Object.keys(course).length > 0 ? (
+            {course ?
+              Object.keys(course).length > 0 ? (
               <>
                 <h2 className="courseTitle">
                   Thông tin chi tiết {course?.course_name}
@@ -565,7 +561,8 @@ const Course = () => {
                 </div>
 
                 {/* Course's chosen tutor */}
-                {publicCourseTutor || privateCourseTutor ? publicCourseTutor !== null && privateCourseTutor !== null && (Object.keys(publicCourseTutor).length !== 0 ||
+                {publicCourseTutor || privateCourseTutor ? (
+                  publicCourseTutor !== null || privateCourseTutor !== null) ? (Object.keys(publicCourseTutor).length !== 0 ||
                 Object.keys(privateCourseTutor).length !== 0) ? (
                   <div className="courseTutor">
                     <h4 className="courseMiniTitle">
@@ -597,7 +594,7 @@ const Course = () => {
                       <hr />
                     </div>
                   </div>
-                ) :"" : ""}
+                ): "" :"" : ""}
               
 
                 {/* Course candidates */}
@@ -700,7 +697,7 @@ const Course = () => {
 
                         {/* Khóa private và là gia sư được chọn */}
                         {user?.accountType === "TUTOR" &&
-                          course?.course_purpose === 2 &&
+                          course?.course_purpose === 2 && privateCourseTutor !== null &&
                           Object.keys(privateCourseTutor).length !== 0 && (
                             <>
                               <button
@@ -723,7 +720,7 @@ const Course = () => {
                         {/* Khóa private và là chủ khóa */}
                         {user?.accountType === "USER" &&
                           course?.account === user?._id &&
-                          course?.course_purpose === 2 &&
+                          course?.course_purpose === 2 && privateCourseTutor !== null &&
                           Object.keys(privateCourseTutor).length !== 0 && (
                             <>
                               <button
@@ -740,9 +737,10 @@ const Course = () => {
                   </div>
                 )}
               </>
-            ) : (
+            ) : 
               "Khóa học không tồn tại."
-            )}
+              : "Khóa học không tồn tại."
+            }
           </div>
         </div>
       </section>
