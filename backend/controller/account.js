@@ -470,8 +470,20 @@ const deleteAccount = async (req, res, next) => {
       //Delete comment on this account
       let resultComment = await Comment.deleteMany({tutor: accountID});
 
+      //Send email 
+      const text = `
+      <p>TutorSite xin thông báo,</p>
+      <p>Tài khoản của bạn đã bị xóa trên hệ thống.</p>
+      <p>Cảm ơn bạn vì đã gắn bó với chúng tôi trong suốt thời gian qua.</p>
+      `;
+      const subject = "Thông báo xóa tài khoản";
+
+      await sendMail(account.email, subject, text);
+
       //Delete Notification of this account
       let resultNotification = await Notification.deleteMany({receiver: accountID});
+
+
 
       //Delete Account
       let resultAccount = await Account.findByIdAndDelete(accountID);
@@ -575,6 +587,16 @@ const deleteAccount = async (req, res, next) => {
 
       //Delete notifications of this account user
       let resultNotification = await Notification.deleteMany({receiver: accountID});
+
+      //Send email 
+      const text = `
+      <p>TutorSite xin thông báo,</p>
+      <p>Tài khoản của bạn đã bị xóa trên hệ thống.</p>
+      <p>Cảm ơn bạn vì đã gắn bó với chúng tôi trong suốt thời gian qua.</p>
+      `;
+      const subject = "Thông báo xóa tài khoản";
+
+      await sendMail(account.email, subject, text);
 
       //Delete account
       let resultAccount = await Account.findByIdAndDelete(accountID);

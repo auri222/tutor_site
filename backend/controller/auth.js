@@ -109,7 +109,7 @@ const register_user = async (req, res, next) => {
     `;
     const subject = "Xác minh tài khoản";
 
-    sendMail(email, subject, text);
+    await sendMail(email, subject, text);
 
     res.status(200).json({
       success: true,
