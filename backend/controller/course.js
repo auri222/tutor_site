@@ -307,7 +307,7 @@ const acceptPrivateCourse = async (req, res, next) => {
     const emailTutor = tutorAccountInfo.email;
     const subject_PHHS = `Khóa học ${course.course_code} đã được chấp nhận`;
     const subject_Tutor = `Nội dung khóa học ${course.course_code}`;
-    const courseDetails = `
+    const courseDetailsForTutor = `
     <table border="1" style='border-collapse:collapse;'>
     <tr>
       <td>Tên khóa học: </td>
@@ -333,6 +333,51 @@ const acceptPrivateCourse = async (req, res, next) => {
       <td>Địa chỉ: </td>
       <td>${course.course_address.home_number}, ${course.course_address.street}, ${course.course_address.ward}, ${course.course_address.district}, ${course.course_address.province}</td>
     </tr>
+    <tr>
+      <td>Số điện thoại liên lạc của PHHS: </td>
+      <td>${PHHSInfo.phone_number}</td>
+    </tr>
+    <tr>
+      <td>Email liên lạc PHHS: </td>
+      <td>${PHHSInfo.email}</td>
+    </tr>
+
+    </table>
+    `;
+    const courseDetailsForPHHS = `
+    <table border="1" style='border-collapse:collapse;'>
+    <tr>
+      <td>Tên khóa học: </td>
+      <td>${course.course_name}</td>
+    </tr>
+    <tr>
+      <td>Lớp: </td>
+      <td>${classString}</td>
+    </tr>
+    <tr>
+      <td>Môn: </td>
+      <td>${subjectString}</td>
+    </tr>
+    <tr>
+      <td>Lịch học: </td>
+      <td>${scheduleString}</td>
+    </tr>
+    <tr>
+      <td>Giờ học: </td>
+      <td>${course.course_time}</td>
+    </tr>
+    <tr>
+      <td>Địa chỉ: </td>
+      <td>${course.course_address.home_number}, ${course.course_address.street}, ${course.course_address.ward}, ${course.course_address.district}, ${course.course_address.province}</td>
+    </tr>
+    <tr>
+      <td>Số điện thoại liên lạc của gia sư: </td>
+      <td>${tutorAccountInfo.phone_number}</td>
+    </tr>
+    <tr>
+      <td>Email liên lạc của gia sư: </td>
+      <td>${tutorAccountInfo.email}</td>
+    </tr>
 
     </table>
     `;
@@ -342,7 +387,7 @@ const acceptPrivateCourse = async (req, res, next) => {
     <span>Xin chào gia sư <b>${tutor_name}</b>,</span> <br>
     <p>Chi tiết khóa học ${course.course_code} đã được đăng ký từ tài khoản ${PHHSInfo.username}: </p>
     ` +
-      courseDetails +
+      courseDetailsForTutor +
       ` 
     <p>Cảm ơn vì đã tin tưởng sử dụng dịch vụ của chúng tôi.</p>
     `;
@@ -353,13 +398,13 @@ const acceptPrivateCourse = async (req, res, next) => {
     <p>Chi tiết khóa học ${course.course_code} của bạn đã đăng ký với gia sư ${tutor_name}: </p>
 
     ` +
-      courseDetails +
+      courseDetailsForPHHS +
       ` 
     <p>Cảm ơn vì đã tin tưởng sử dụng dịch vụ của chúng tôi.</p>
     `;
 
-    sendMail(emailTutor, subject_Tutor, content_Tutor);
-    sendMail(emailPHHS, subject_PHHS, content_PHHS);
+    await sendMail(emailTutor, subject_Tutor, content_Tutor);
+    await sendMail(emailPHHS, subject_PHHS, content_PHHS);
 
     res.status(200).json({
       success: true,
@@ -570,7 +615,7 @@ const chooseCandidate = async (req, res, next) => {
       { new: true }
     );
 
-    //pull tutor id out of list candidates
+    //pull tutor account id out of list candidates
     await Course.findByIdAndUpdate(course_id, {$pull: {
       course_candidates: mongoose.Types.ObjectId(tutor_id)
     }})
@@ -593,16 +638,18 @@ const chooseCandidate = async (req, res, next) => {
 
     await newNotification.save();
 
+    const updatedCourse = await Course.findById(course_id);
+
     //Send notification for candidates
-    if (course.course_candidates.length !== 0) {
-      for (let elem of course.course_candidates) {
+    if (updatedCourse.course_candidates.length !== 0) {
+      for (let elem of updatedCourse.course_candidates) {
         //Send notification
         //Skip a step when meet the chosen tutor in the candidates list
         if (elem.toHexString() === tutor_id) {
           continue;
         }
 
-        let message = `Khóa học ${course.course_code} đã chọn được gia sư và đã đóng. Bạn có thể tìm và đăng ký khóa học khác trên hệ thống.`;
+        let message = `Khóa học ${updatedCourse.course_code} đã chọn được gia sư và đã đóng. Bạn có thể tìm và đăng ký khóa học khác trên hệ thống.`;
         let notifiyCandidates = new Notification({
           receiver: elem,
           sender: "System",
@@ -648,7 +695,7 @@ const chooseCandidate = async (req, res, next) => {
     const emailTutor = TutorAccount.email;
     const subject_PHHS = `Nội dung khóa học ${course.course_code} của bạn`;
     const subject_Tutor = `Nội dung khóa học ${course.course_code} của bạn và tài khoản ${PHHSInfo.username}`;
-    const courseDetails = `
+    const courseDetailsForTutor = `
     <table border="1" style='border-collapse:collapse;'>
     <tr>
       <td>Tên khóa học: </td>
@@ -674,6 +721,51 @@ const chooseCandidate = async (req, res, next) => {
       <td>Địa chỉ: </td>
       <td>${course.course_address.home_number}, ${course.course_address.street}, ${course.course_address.ward}, ${course.course_address.district}, ${course.course_address.province}</td>
     </tr>
+    <tr>
+      <td>Số điện thoại liên hệ của PHHS: </td>
+      <td>${PHHSInfo.phone_number}/td>
+    </tr>
+    <tr>
+      <td>Email liên hệ của PHHS: </td>
+      <td>${PHHSInfo.email}}</td>
+    </tr>
+
+    </table>
+    `;
+    const courseDetailsForPHHS = `
+    <table border="1" style='border-collapse:collapse;'>
+    <tr>
+      <td>Tên khóa học: </td>
+      <td>${course.course_name}</td>
+    </tr>
+    <tr>
+      <td>Lớp: </td>
+      <td>${classString}</td>
+    </tr>
+    <tr>
+      <td>Môn: </td>
+      <td>${subjectString}</td>
+    </tr>
+    <tr>
+      <td>Lịch học: </td>
+      <td>${scheduleString}</td>
+    </tr>
+    <tr>
+      <td>Giờ học: </td>
+      <td>${course.course_time}</td>
+    </tr>
+    <tr>
+      <td>Địa chỉ: </td>
+      <td>${course.course_address.home_number}, ${course.course_address.street}, ${course.course_address.ward}, ${course.course_address.district}, ${course.course_address.province}</td>
+    </tr>
+    <tr>
+      <td>Số điện thoại liên hệ của PHHS: </td>
+      <td>${TutorAccount.phone_number}/td>
+    </tr>
+    <tr>
+      <td>Email liên hệ của PHHS: </td>
+      <td>${TutorAccount.email}}</td>
+    </tr>
 
     </table>
     `;
@@ -683,7 +775,7 @@ const chooseCandidate = async (req, res, next) => {
     <span>Xin chào gia sư <b>${TutorInfo.tutor_name}</b>,</span> <br>
     <p>Chi tiết khóa học ${course.course_code} đã được đăng ký từ tài khoản ${PHHSInfo.username}: </p>
     ` +
-      courseDetails +
+      courseDetailsForTutor +
       ` 
     <p>Cảm ơn vì đã tin tưởng sử dụng dịch vụ của chúng tôi.</p>
     `;
@@ -694,7 +786,7 @@ const chooseCandidate = async (req, res, next) => {
     <p>Chi tiết khóa học ${course.course_code} của bạn đã đăng ký với gia sư ${TutorInfo.tutor_name}: </p>
 
     ` +
-      courseDetails +
+      courseDetailsForPHHS +
       ` 
     <p>Cảm ơn vì đã tin tưởng sử dụng dịch vụ của chúng tôi.</p>
     `;
