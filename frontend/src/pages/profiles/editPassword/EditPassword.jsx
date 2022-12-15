@@ -188,7 +188,7 @@ const EditPassword = () => {
                   type="submit"
                   onClick={handleSubmit}
                 >
-                  Sửa thông tin
+                  Sửa mật khẩu
                 </button>
               </form>
             ) : (

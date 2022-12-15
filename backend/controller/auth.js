@@ -102,7 +102,7 @@ const register_user = async (req, res, next) => {
     const accId = newAccount._id;
 
     const text = `
-    <p>TutorSite xin chào,</p>
+    <p>TutorSite xin chào ${newAccount.username},</p>
     <p>Đây là mã OTP <b>${OTP}</b>. </p> 
     <p>Để xác minh tài khoản hãy nhập mã này vào form xác nhận ở bước xác minh tài khoản</p>
     <p>Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của chúng tôi.</p>
@@ -460,7 +460,7 @@ const login = async (req, res, next) => {
         .json({ status: false, message: "Sai tên đăng nhập hoặc mật khẩu!" });
 
     if(!user.isVerify)
-      return res.status(403).json({success: false, message: "Tài khoản của bạn chưa được xác minh. Hãy nhập mã OTP mà chúng tôi đã gửi mail cho bạn vào trang xác nhận OTP.", user: user._id});
+      return res.status(403).json({success: false, message: "Tài khoản của bạn chưa được xác minh.", user: user._id});
 
     if(user.isLock)
       return next(createError(401, "Tài khoản của bạn hiện đã bị khóa. Vui lòng liên hệ để biết thêm chi tiết!"));

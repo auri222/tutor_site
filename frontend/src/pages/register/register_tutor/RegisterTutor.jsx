@@ -217,11 +217,11 @@ const Register_tutor = () => {
       isValidate = false;
       err["password"] = "Hãy nhập mật khẩu!";
     }
-    if (account.password.length < 8) {
+    else if (account.password.length < 8) {
       isValidate = false;
       err["password"] = "Mật khẩu phải nhiều hơn 8 ký tự!";
     }
-    if (!account.password.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)([\W]*).{8,}/)) {
+    else if (!account.password.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)([\W]*).{8,}/)) {
       isValidate = false;
       err["password"] =
         "Mật khẩu phải nhiều hơn 8 ký tự, bao gồm ký tự in hoa, in thường, số, có hoặc không có ký tự đặc biệt: !@#$%^* ...!";
@@ -237,6 +237,9 @@ const Register_tutor = () => {
     if (account.CCCD === "") {
       isValidate = false;
       err["CCCD"] = "Hãy nhập số CCCD!";
+    }else if(account.CCCD.length < 0 || account.CCCD.length>12){
+      isValidate = false;
+      err["CCCD"] = "Hãy nhập số CCCD hợp lệ!";
     }
     if (account.email === "") {
       isValidate = false;
@@ -785,7 +788,7 @@ const Register_tutor = () => {
                             <input
                               className="form-check-input"
                               type="checkbox"
-                              onChange={handleSelectSchedule}
+                              onChange={handleSelectSubjects}
                               value={item.name}
                             />
                             <label className="form-check-label">
@@ -817,7 +820,7 @@ const Register_tutor = () => {
                             <input
                               className="form-check-input"
                               type="checkbox"
-                              onChange={handleSelectSubjects}
+                              onChange={handleSelectSchedule}
                               value={item.name}
                             />
                             <label className="form-check-label">

@@ -11,7 +11,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
-const AccountTable = ({handleLock, handleUnlock, handleDelete, handleClickDetails}) => {
+const AccountTable = ({
+  handleLock,
+  handleUnlock,
+  handleDelete,
+  handleClickDetails,
+}) => {
   const [search, setSearch] = useState("");
   const [record, setRecord] = useState(0); //Số record hiển thị
   const [total, setTotal] = useState(0); //Tổng số account
@@ -62,7 +67,6 @@ const AccountTable = ({handleLock, handleUnlock, handleDelete, handleClickDetail
     loadData(0, 8, search, false);
   };
 
-
   return (
     <div className="accountTable">
       <div className="accountTableTitle">Danh sách tài khoản</div>
@@ -76,7 +80,6 @@ const AccountTable = ({handleLock, handleUnlock, handleDelete, handleClickDetail
             placeholder="Tìm kiếm tên tài khoản"
             onChange={(e) => setSearch(e.target.value)}
             onKeyUp={handleSearch}
-            
           />
           {/* <button className="btnSearchUsername" onClick={handleSearch}>Tìm kiếm</button> */}
         </div>
@@ -136,55 +139,68 @@ const AccountTable = ({handleLock, handleUnlock, handleDelete, handleClickDetail
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="CLick để xem chi tiết"
-                    onClick={() => {handleClickDetails(item._id)}}
+                    onClick={() => {
+                      handleClickDetails(item._id);
+                    }}
                   >
                     <FontAwesomeIcon icon={faEye} />
                   </button>
-                  {item.isLock ? (
-                    <button
-                      type="button"
-                      className="btn btn-warning me-2"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Click để mở khóa tài khoản"
-                      onClick={() => {handleUnlock(item._id)}}
-                    >
-                      <FontAwesomeIcon icon={faLock} />
-                      
-                    </button>
+                  {!item.isAdmin ? (
+                    <>
+                      {item.isLock ? (
+                        <button
+                          type="button"
+                          className="btn btn-warning me-2"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Click để mở khóa tài khoản"
+                          onClick={() => {
+                            handleUnlock(item._id);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faLock} />
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="btn btn-warning me-2"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Click để khóa tài khoản"
+                          onClick={() => {
+                            handleLock(item._id);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faLockOpen} />
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Click để xóa tài khoản"
+                        onClick={() => {
+                          handleDelete(item._id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </button>
+                    </>
                   ) : (
-                    <button
-                      type="button"
-                      className="btn btn-warning me-2"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Click để khóa tài khoản"
-                      onClick={() => {handleLock(item._id)}}
-                    >
-                      <FontAwesomeIcon icon={faLockOpen} />
-                    </button>
+                    ""
                   )}
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Click để xóa tài khoản"
-                    onClick={() => {handleDelete(item._id)}}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </button>
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
       <div className="accountTableLoadMore">
-        { isLoadMore && (
-              <button className="btnLoadMore" onClick={handleLoadMore}>
-                Tải thêm ...
-              </button>
-            )}
+        {isLoadMore && (
+          <button className="btnLoadMore" onClick={handleLoadMore}>
+            Tải thêm ...
+          </button>
+        )}
       </div>
     </div>
   );

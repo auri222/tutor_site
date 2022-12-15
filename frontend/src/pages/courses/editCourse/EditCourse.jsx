@@ -243,10 +243,18 @@ const EditCourse = () => {
     }
 
     //Check address, addrOption
-    if (addrOption === false) {
-      isValidate = false;
-      err["address"] =
-        "Hãy nhập đầy đủ địa chỉ hoặc tick vào ô giữ nguyên địa chỉ";
+    if (addrOption) {
+      if (
+        address.home_number === "" ||
+        address.street === "" ||
+        address.ward === "" ||
+        address.district === "" ||
+        address.province === ""
+      ) {
+        isValidate = false;
+        err["address"] =
+          "Hãy nhập đầy đủ địa chỉ hoặc tick vào ô giữ nguyên địa chỉ";
+      }
     }
 
     setError(err);
@@ -280,6 +288,7 @@ const EditCourse = () => {
           {
             PHHS_id: user._id,
             updatedCourse: updatedCourse,
+            addrOption: addrOption,
           },
           { withCredentials: true }
         );
@@ -489,140 +498,139 @@ const EditCourse = () => {
                     <h4 className="cCFPartTitle">Địa chỉ khóa học</h4>
                   </div>
                   <div className="col-md-9">
-                    <div className="mb-3">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <label htmlFor="home_number">Số nhà</label>
+                    <div className="row mb-2">
+                      <div className="col-md-12">
+                        <div
+                          id="addrOpt"
+                          className="form-check form-check-inline"
+                        >
                           <input
-                            type="text"
-                            id="home_number"
-                            className="form-control"
-                            placeholder="Số 123/H2"
-                            onChange={handleAddressChange}
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Số nhà chỉ hiển thị cho gia sư được chọn thông qua email"
-                            disabled={addrOption}
+                            className="form-check-input"
+                            type="checkbox"
+                            onChange={handleAddrOptionChange}
+                            value={addrOption ? "checked" : "uncheck"}
                           />
+                          <label className="form-check-label">
+                            Thay đổi địa chỉ
+                          </label>
                         </div>
-                        <div className="col-md-6">
-                          <label htmlFor="street">Tên đường</label>
-                          <input
-                            type="text"
-                            id="street"
-                            className="form-control"
-                            placeholder="Đường 3/2"
-                            onChange={handleAddressChange}
-                            disabled={addrOption}
-                          />
+                        <div>
+                          <small>
+                            Hãy chọn tùy chọn này khi bạn muốn thay đổi địa chỉ.
+                          </small>
                         </div>
                       </div>
                     </div>
+                    {addrOption && (
+                      <>
+                        <div className="mb-3">
+                          <div className="row">
+                            <div className="col-md-6">
+                              <label htmlFor="home_number">Số nhà</label>
+                              <input
+                                type="text"
+                                id="home_number"
+                                className="form-control"
+                                placeholder="Số 123/H2"
+                                onChange={handleAddressChange}
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Số nhà chỉ hiển thị cho gia sư được chọn thông qua email"
 
-                    <div className="mb-3">
-                      <div className="row mb-3">
-                        <div className="col-md-4">
-                          <label htmlFor="province">Tỉnh thành</label>
-                          <select
-                            id="province"
-                            className="form-control"
-                            onChange={handleProvinceChange}
-                            defaultValue={"DEFAULT"}
-                            disabled={addrOption}
-                          >
-                            <option value={"DEFAULT"} disabled>
-                              --Chọn tỉnh thành--
-                            </option>
-                            {provinces ? (
-                              provinces.map((province) => (
-                                <option
-                                  key={province.code}
-                                  value={province.code}
-                                >
-                                  {province.name_with_type}
-                                </option>
-                              ))
-                            ) : (
-                              <option disabled>--Chọn tỉnh thành--</option>
-                            )}
-                          </select>
-                        </div>
-                        <div className="col-md-4">
-                          <label htmlFor="district">Quận huyện</label>
-                          <select
-                            id="district"
-                            className="form-control"
-                            onChange={handleDistrictChange}
-                            defaultValue={"DEFAULT"}
-                            disabled={addrOption}
-                          >
-                            <option value={"DEFAULT"} disabled>
-                              --Chọn quận huyện--
-                            </option>
-                            {districts ? (
-                              districts.map((district) => (
-                                <option
-                                  key={district.code}
-                                  value={district.code}
-                                >
-                                  {district.name_with_type}
-                                </option>
-                              ))
-                            ) : (
-                              <option disabled>--Chọn quận huyện--</option>
-                            )}
-                          </select>
-                        </div>
-                        <div className="col-md-4">
-                          <label htmlFor="ward">Phường xã</label>
-                          <select
-                            id="ward"
-                            className="form-control"
-                            onChange={handleWardChange}
-                            defaultValue={"DEFAULT"}
-                            disabled={addrOption}
-                          >
-                            <option value={"DEFAULT"} disabled>
-                              --Chọn phường xã--
-                            </option>
-                            {wards ? (
-                              wards.map((ward) => (
-                                <option key={ward.code} value={ward.code}>
-                                  {ward.name_with_type}
-                                </option>
-                              ))
-                            ) : (
-                              <option disabled>--Chọn phường xã--</option>
-                            )}
-                          </select>
-                        </div>
-                      </div>
+                              />
+                            </div>
+                            <div className="col-md-6">
+                              <label htmlFor="street">Tên đường</label>
+                              <input
+                                type="text"
+                                id="street"
+                                className="form-control"
+                                placeholder="Đường 3/2"
+                                onChange={handleAddressChange}
 
-                      <div className="row mb-2">
-                        <div className="col-md-12">
-                          <div
-                            id="addrOpt"
-                            className="form-check form-check-inline"
-                          >
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              onChange={handleAddrOptionChange}
-                              value={addrOption ? "checked" : "uncheck"}
-                            />
-                            <label className="form-check-label">
-                              Giữ nguyên địa chỉ đã lưu
-                            </label>
-                          </div>
-                          <div>
-                            <small>
-                              Hãy chọn tùy chọn này khi bạn không cần thay đổi
-                              địa chỉ.
-                            </small>
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+
+                        <div className="mb-3">
+                          <div className="row mb-3">
+                            <div className="col-md-4">
+                              <label htmlFor="province">Tỉnh thành</label>
+                              <select
+                                id="province"
+                                className="form-control"
+                                onChange={handleProvinceChange}
+                                defaultValue={"DEFAULT"}
+                              >
+                                <option value={"DEFAULT"} disabled>
+                                  --Chọn tỉnh thành--
+                                </option>
+                                {provinces ? (
+                                  provinces.map((province) => (
+                                    <option
+                                      key={province.code}
+                                      value={province.code}
+                                    >
+                                      {province.name_with_type}
+                                    </option>
+                                  ))
+                                ) : (
+                                  <option disabled>--Chọn tỉnh thành--</option>
+                                )}
+                              </select>
+                            </div>
+                            <div className="col-md-4">
+                              <label htmlFor="district">Quận huyện</label>
+                              <select
+                                id="district"
+                                className="form-control"
+                                onChange={handleDistrictChange}
+                                defaultValue={"DEFAULT"}
+                              >
+                                <option value={"DEFAULT"} disabled>
+                                  --Chọn quận huyện--
+                                </option>
+                                {districts ? (
+                                  districts.map((district) => (
+                                    <option
+                                      key={district.code}
+                                      value={district.code}
+                                    >
+                                      {district.name_with_type}
+                                    </option>
+                                  ))
+                                ) : (
+                                  <option disabled>--Chọn quận huyện--</option>
+                                )}
+                              </select>
+                            </div>
+                            <div className="col-md-4">
+                              <label htmlFor="ward">Phường xã</label>
+                              <select
+                                id="ward"
+                                className="form-control"
+                                onChange={handleWardChange}
+                                defaultValue={"DEFAULT"}
+                              >
+                                <option value={"DEFAULT"} disabled>
+                                  --Chọn phường xã--
+                                </option>
+                                {wards ? (
+                                  wards.map((ward) => (
+                                    <option key={ward.code} value={ward.code}>
+                                      {ward.name_with_type}
+                                    </option>
+                                  ))
+                                ) : (
+                                  <option disabled>--Chọn phường xã--</option>
+                                )}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <hr />
                 </div>

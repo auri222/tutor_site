@@ -110,12 +110,14 @@ const Register_user = () => {
     if (data.CCCD === "") {
       isValidate = false;
       err["CCCD"] = "Hãy nhập số CCCD!";
+    } else if(data.CCCD.length < 0 || data.CCCD.length > 12){
+      isValidate = false;
+      err["CCCD"] = "Hãy nhập số CCCD hợp lệ!";
     }
     if (data.email === "") {
       isValidate = false;
       err["email"] = "Hãy nhập địa chỉ email!";
-    }
-    if (
+    }else if (
       !data.email.match(
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/
       )

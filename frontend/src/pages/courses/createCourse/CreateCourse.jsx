@@ -187,7 +187,7 @@ const CreateCourse = () => {
     //Check course name, course time
     if (course.course_name === "") {
       isValidate = false;
-      err["course_name"] = "Hãy nhập tên lớp học.";
+      err["course_name"] = "Hãy nhập tên khóa học.";
     }
 
     if (course.course_time === "") {

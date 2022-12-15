@@ -862,7 +862,7 @@ const deleteCourse = async (req, res, next) => {
 
 const editCourse = async (req, res, next) => {
   const course_id = req.params.id;
-  const { PHHS_id, updatedCourse } = req.body;
+  const { PHHS_id, updatedCourse, addrOption } = req.body;
   try {
     //Check course
     const course = await Course.findById(course_id);
@@ -879,7 +879,8 @@ const editCourse = async (req, res, next) => {
         createError(401, "Bạn không có quyền để thực hiện hành động này!")
       );
 
-    await Course.findByIdAndUpdate(
+    if(addrOption){
+      await Course.findByIdAndUpdate(
       course_id,
       {
         $set: {
@@ -899,6 +900,25 @@ const editCourse = async (req, res, next) => {
       },
       { new: true }
     );
+    }
+    else{
+      await Course.findByIdAndUpdate(
+        course_id,
+        {
+          $set: {
+            course_name: updatedCourse.course_name,
+            course_classes: updatedCourse.course_classes,
+            course_subjects: updatedCourse.course_subjects,
+            course_schedule: updatedCourse.course_schedule,
+            course_requirement: updatedCourse.course_requirement,
+            course_time: updatedCourse.course_time,
+            course_updated_at: new Date(),
+          },
+        },
+        { new: true }
+      );
+    }
+    
 
     if (course.course_purpose === 1) {
       //Notify for candidates

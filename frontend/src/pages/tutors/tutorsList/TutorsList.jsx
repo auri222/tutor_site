@@ -173,9 +173,15 @@ const TutorsList = () => {
       selectedSubjects?.forEach((item, index) => {
         stringSubject += (index === selectedSubjects.length-1)? `${item}`: `${item},`;
       })
+
+      let name = "";
+      if(tutorName !== ""){
+        name = tutorName.replace(/[\s]/g, "%20");
+      }
+
       console.log(stringClass);
       console.log(stringSubject);
-      const url = `http://localhost:8000/api/tutors?tutor_name=${tutorName}&classes=${stringClass}&subjects=${stringSubject}&province=${address.province}&district=${address.district}&ward=${address.ward}`;
+      const url = `http://localhost:8000/api/tutors?tutor_name=${name}&classes=${stringClass}&subjects=${stringSubject}&province=${address.province}&district=${address.district}&ward=${address.ward}`;
       const res = await axios.get(url);
       if(res.data){
         setTotal(res.data.total);

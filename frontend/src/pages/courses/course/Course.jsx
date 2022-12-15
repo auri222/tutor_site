@@ -523,7 +523,10 @@ const Course = () => {
                   </div>
                   <div className="row mb-3">
                     <div className="col-md-3 courseDetailsTitle">Địa chỉ</div>
-                    <div className="col-md-9">{`${course?.course_address?.ward}, ${course?.course_address?.district}, ${course?.course_address?.province}`}</div>
+                    <div className="col-md-9">
+                      {course?.account === user?._id ? `${course?.course_address?.home_number}, ${course?.course_address?.street}, ` : ''}
+                      {`${course?.course_address?.ward}, ${course?.course_address?.district}, ${course?.course_address?.province}`}
+                    </div>
                   </div>
                   <div className="row mb-3">
                     <div className="col-md-3 courseDetailsTitle">
