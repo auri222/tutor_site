@@ -42,7 +42,10 @@ const DashboardNav = () => {
         <div className="items">
           <div className="item" onClick={handleClickBell}>
             <FontAwesomeIcon icon={faBell} />
-            <div className="counter">{countNotify !== 0 ? countNotify : ""}</div>
+            {countNotify !== 0 ? (
+              <div className="counter">{countNotify}</div>
+            ) : ""}
+            
           </div>
           <div className="item">
             <span className="dbNavTitle">Xin chào {user?.username}</span>

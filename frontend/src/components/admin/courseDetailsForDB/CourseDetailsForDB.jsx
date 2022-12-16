@@ -187,7 +187,7 @@ const CourseDetailsForDB = () => {
                     Thông tin gia sư được chọn
                   </h4>
                   <div className="row mb-3">
-                      <div className="col-md-12">Tài khoản gia sư được chọn đã bị xóa <hr /> </div>
+                      <div className="col-md-12">Chưa chọn gia sư hoặc gia sư này đã bị xóa<hr /> </div>
                     
                   </div>
                 </div>
